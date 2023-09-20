@@ -12,6 +12,13 @@ h1 {
   color: #fff;
 }
 
+.game-info {
+  margin: 5px 0 30px 0;
+
+  color: #fff;
+  font-size: 2rem;
+}
+
 .game-container {
   display: flex;
   flex-direction: column;
@@ -38,7 +45,7 @@ h1 {
   -ms-user-select: none;
 }
 
-.square:hover {
+.active:hover {
   background-color: #dbdbdb;
   cursor: pointer;
 }
