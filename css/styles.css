@@ -49,3 +49,7 @@ h1 {
   background-color: #dbdbdb;
   cursor: pointer;
 }
+
+.highlighted {
+  background-color: #e5ff4f;
+}
