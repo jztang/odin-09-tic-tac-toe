@@ -53,3 +53,18 @@ h1 {
 .highlighted {
   background-color: #e5ff4f;
 }
+
+.reset-btn {
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  margin-top: 25px;
+
+  background-color: #fff;
+  font-size: 2rem;
+}
+
+.reset-btn:hover {
+  background-color: #dbdbdb;
+  cursor: pointer;
+}

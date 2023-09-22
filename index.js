@@ -43,7 +43,15 @@ const displayController = (() => {
     });
   };
 
-  return { setGameInfo, updateSquare, highlightSquares, disableAllSquares };
+  const resetSquares = () => {
+    squareDivs.forEach((squareDiv) => {
+      squareDiv.textContent = "";
+      squareDiv.classList.remove("highlighted");
+      squareDiv.classList.add("active");
+    });
+  };
+
+  return { setGameInfo, updateSquare, highlightSquares, disableAllSquares, resetSquares };
 })();
 
 const gameController = (() => {
@@ -124,7 +132,15 @@ const gameController = (() => {
     }
   };
 
-  return { clickSquare };
+  const resetGame = () => {
+    gameBoard.resetBoard();
+    displayController.setGameInfo("It's X's turn to move");
+    displayController.resetSquares();
+    movesMade = 0;
+    currentPlayer = "X";
+  };
+
+  return { clickSquare, resetGame };
 })();
 
 // Add click handlers to each square
@@ -134,6 +150,10 @@ document.querySelectorAll(".square").forEach((square, currentIndex) => {
       gameController.clickSquare(currentIndex);
     }
   });
+});
+
+document.querySelector(".reset-btn").addEventListener("click", () => {
+  gameController.resetGame();
 });
 
 gameBoard.resetBoard();
