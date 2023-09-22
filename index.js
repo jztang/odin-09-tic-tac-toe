@@ -1,5 +1,5 @@
 const gameBoard = (() => {
-  let board;
+  let board = [];
 
   const getBoard = () => board;
 
@@ -31,19 +31,19 @@ const displayController = (() => {
     }
   };
 
-  const highlightSquares = (lineIndexes) => {
-    lineIndexes.forEach((index) => {
+  const highlightSquares = (indexes) => {
+    indexes.forEach((index) => {
       squareDivs[index].classList.add("highlighted");
     });
   };
 
   const disableAllSquares = () => {
-    squareDivs.forEach((square) => {
-      square.classList.remove("active");
+    squareDivs.forEach((squareDiv) => {
+      squareDiv.classList.remove("active");
     });
   };
 
-  const resetSquares = () => {
+  const resetAllSquares = () => {
     squareDivs.forEach((squareDiv) => {
       squareDiv.textContent = "";
       squareDiv.classList.remove("highlighted");
@@ -51,14 +51,14 @@ const displayController = (() => {
     });
   };
 
-  return { setGameInfo, updateSquare, highlightSquares, disableAllSquares, resetSquares };
+  return { setGameInfo, updateSquare, highlightSquares, disableAllSquares, resetAllSquares };
 })();
 
 const gameController = (() => {
   let movesMade = 0;
   let currentPlayer = "X";
 
-  const checkForWin = () => {
+  const getWinningSquares = () => {
     let numInARow;
     let lineIndexes;
 
@@ -116,7 +116,7 @@ const gameController = (() => {
     movesMade++;
     gameBoard.setSquare(index, currentPlayer);
     displayController.updateSquare(index);
-    const lineIndexes = checkForWin();
+    const lineIndexes = getWinningSquares();
     if (lineIndexes.length > 0) {
       displayController.setGameInfo(`Game over - ${currentPlayer} wins!`);
       displayController.highlightSquares(lineIndexes);
@@ -135,7 +135,7 @@ const gameController = (() => {
   const resetGame = () => {
     gameBoard.resetBoard();
     displayController.setGameInfo("It's X's turn to move");
-    displayController.resetSquares();
+    displayController.resetAllSquares();
     movesMade = 0;
     currentPlayer = "X";
   };
@@ -144,10 +144,10 @@ const gameController = (() => {
 })();
 
 // Add click handlers to each square
-document.querySelectorAll(".square").forEach((square, currentIndex) => {
-  square.addEventListener("click", () => {
-    if (square.classList.contains("active")) {
-      gameController.clickSquare(currentIndex);
+document.querySelectorAll(".square").forEach((squareDiv, index) => {
+  squareDiv.addEventListener("click", () => {
+    if (squareDiv.classList.contains("active")) {
+      gameController.clickSquare(index);
     }
   });
 });
@@ -155,5 +155,3 @@ document.querySelectorAll(".square").forEach((square, currentIndex) => {
 document.querySelector(".reset-btn").addEventListener("click", () => {
   gameController.resetGame();
 });
-
-gameBoard.resetBoard();
